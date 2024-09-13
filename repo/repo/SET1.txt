@@ -1,0 +1,21 @@
+Question Paper - SET 1
+
+1. 
+Recursive Mutex
+2. 
+Lock guard
+3. 
+Critical Section
+4. Function pointer
+5. 
+Data Race conditions
+6. 
+Demonstration of sleep and wait
+7. 
+Atomicity
+8. 
+Sleep Vs Wait
+9. 
+Deadlock 
+10. 
+Try lock

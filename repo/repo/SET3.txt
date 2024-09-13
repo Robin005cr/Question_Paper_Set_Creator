@@ -1,0 +1,22 @@
+Question Paper - SET 3
+
+1. 
+Atomicity
+2. 
+Deadlock 
+3. 
+Mutex 
+4. 
+State diagram
+5. 
+Data Race conditions
+6. 
+How to create thread
+7. 
+Demonstration of sleep and wait
+8. 
+Joinable
+9. 
+Lock guard
+10. 
+Deadlock avoidance with multiple mutexes
