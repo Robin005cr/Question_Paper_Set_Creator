@@ -1,0 +1,3 @@
+C:/Users/ASUS/Desktop/Professional_repo/Question_Paper_Set_Creator/question_paper_set_creator/out/build/x64-debug/CMakeFiles/question_paper_set_creator.dir
+C:/Users/ASUS/Desktop/Professional_repo/Question_Paper_Set_Creator/question_paper_set_creator/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/Users/ASUS/Desktop/Professional_repo/Question_Paper_Set_Creator/question_paper_set_creator/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
