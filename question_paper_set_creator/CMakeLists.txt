@@ -26,5 +26,3 @@ add_executable(question_paper_set_creator ${SOURCES} ${HEADERS})
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET question_paper_set_creator PROPERTY CXX_STANDARD 20)
 endif()
-
-

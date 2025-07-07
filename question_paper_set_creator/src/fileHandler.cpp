@@ -54,6 +54,9 @@ void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int
     // Use random_device and mt19937 for better randomness
     random_device rd;
     mt19937 g(rd());
+    string fileType;
+    cout << "Enter File type(txt or csv):" << endl;
+    cin >> fileType;
 
     for (int setNum = 1; setNum <= numSets; ++setNum)
     {
@@ -61,7 +64,7 @@ void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int
         shuffle(shuffledQuestions.begin(), shuffledQuestions.end(), g);
 
         // Create SETx.txt
-        ofstream outFile("SET" + to_string(setNum) + ".txt");
+        ofstream outFile("SET" + to_string(setNum) + "." + fileType);
 
         outFile << "Question Paper - SET " << setNum << "\n\n";
         for (int i = 0; i < questionsPerSet && i < shuffledQuestions.size(); ++i)
@@ -70,6 +73,6 @@ void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int
         }
 
         outFile.close();
-        cout << "SET" << setNum << ".txt generated with " << questionsPerSet << " questions.\n";
+        cout << "SET" << setNum << "." << fileType << "generated with " << questionsPerSet << " questions.\n";
     }
 }
