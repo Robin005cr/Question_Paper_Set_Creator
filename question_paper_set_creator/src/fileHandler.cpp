@@ -17,6 +17,7 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <filesystem>
 #include "fileHandler.hpp"
 using namespace std;
 
@@ -51,7 +52,8 @@ vector<string> FileHandler::readQuestionsFromFile(const string &filePath)
 // Function to generate the question paper sets
 void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int numSets, int questionsPerSet)
 {
-    if (questionBank.empty()) {
+    if (questionBank.empty())
+    {
         cerr << "Question bank is empty. Aborting generation.\n";
         return;
     }
@@ -61,15 +63,41 @@ void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int
     cin >> fileType;
 
     // Validate file type
-    if (fileType != "txt" && fileType != "csv") {
+    if (fileType != "txt" && fileType != "csv")
+    {
         cerr << "Invalid file type. Please enter 'txt' or 'csv'.\n";
         return;
     }
 
     // Adjust if more questions are requested than available
-    if (questionsPerSet > questionBank.size()) {
+    if (questionsPerSet > questionBank.size())
+    {
         cout << "Only " << questionBank.size() << " questions available. Reducing questions per set to match.\n";
         questionsPerSet = questionBank.size();
+    }
+    // Ask user for output directory or hardcode it
+    string directory;
+    cout << "Enter directory to save files (leave blank for current folder): ";
+    cin.ignore(); // ignore leftover newline
+    getline(cin, directory);
+
+    fs::path baseDir;
+    if (directory.empty())
+    {
+        baseDir = fs::current_path(); // default to current working directory
+    }
+    else
+    {
+        baseDir = fs::path(directory);
+        if (!fs::exists(baseDir))
+        {
+            cerr << "Directory does not exist. Trying to create it...\n";
+            if (!fs::create_directories(baseDir))
+            {
+                cerr << "Failed to create directory. Aborting.\n";
+                return;
+            }
+        }
     }
 
     random_device rd;
@@ -83,20 +111,25 @@ void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int
         string fileName = "SET" + to_string(setNum) + "." + fileType;
         ofstream outFile(fileName);
 
-        if (!outFile.is_open()) {
+        if (!outFile.is_open())
+        {
             cerr << "Failed to create file: " << fileName << "\n";
             continue;
         }
 
-        if (fileType == "csv") {
+        if (fileType == "csv")
+        {
             outFile << "Question Number,Question\n";
-            for (int i = 0; i < questionsPerSet; ++i) {
+            for (int i = 0; i < questionsPerSet; ++i)
+            {
                 outFile << i + 1 << ",\"" << shuffledQuestions[i] << "\"\n";
             }
         }
-        else { // txt
+        else
+        { // txt
             outFile << "Question Paper - SET " << setNum << "\n\n";
-            for (int i = 0; i < questionsPerSet; ++i) {
+            for (int i = 0; i < questionsPerSet; ++i)
+            {
                 outFile << i + 1 << ". " << shuffledQuestions[i] << "\n";
             }
         }
