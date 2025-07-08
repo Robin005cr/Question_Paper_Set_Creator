@@ -51,28 +51,57 @@ vector<string> FileHandler::readQuestionsFromFile(const string &filePath)
 // Function to generate the question paper sets
 void FileHandler::generateQuestionPapers(const vector<string> &questionBank, int numSets, int questionsPerSet)
 {
-    // Use random_device and mt19937 for better randomness
+    if (questionBank.empty()) {
+        cerr << "Question bank is empty. Aborting generation.\n";
+        return;
+    }
+
+    string fileType;
+    cout << "Enter file type (txt or csv): ";
+    cin >> fileType;
+
+    // Validate file type
+    if (fileType != "txt" && fileType != "csv") {
+        cerr << "Invalid file type. Please enter 'txt' or 'csv'.\n";
+        return;
+    }
+
+    // Adjust if more questions are requested than available
+    if (questionsPerSet > questionBank.size()) {
+        cout << "Only " << questionBank.size() << " questions available. Reducing questions per set to match.\n";
+        questionsPerSet = questionBank.size();
+    }
+
     random_device rd;
     mt19937 g(rd());
-    string fileType;
-    cout << "Enter File type(txt or csv):" << endl;
-    cin >> fileType;
 
     for (int setNum = 1; setNum <= numSets; ++setNum)
     {
         vector<string> shuffledQuestions = questionBank;
         shuffle(shuffledQuestions.begin(), shuffledQuestions.end(), g);
 
-        // Create SETx.txt
-        ofstream outFile("SET" + to_string(setNum) + "." + fileType);
+        string fileName = "SET" + to_string(setNum) + "." + fileType;
+        ofstream outFile(fileName);
 
-        outFile << "Question Paper - SET " << setNum << "\n\n";
-        for (int i = 0; i < questionsPerSet && i < shuffledQuestions.size(); ++i)
-        {
-            outFile << i + 1 << ". " << shuffledQuestions[i] << "\n";
+        if (!outFile.is_open()) {
+            cerr << "Failed to create file: " << fileName << "\n";
+            continue;
+        }
+
+        if (fileType == "csv") {
+            outFile << "Question Number,Question\n";
+            for (int i = 0; i < questionsPerSet; ++i) {
+                outFile << i + 1 << ",\"" << shuffledQuestions[i] << "\"\n";
+            }
+        }
+        else { // txt
+            outFile << "Question Paper - SET " << setNum << "\n\n";
+            for (int i = 0; i < questionsPerSet; ++i) {
+                outFile << i + 1 << ". " << shuffledQuestions[i] << "\n";
+            }
         }
 
         outFile.close();
-        cout << "SET" << setNum << "." << fileType << "generated with " << questionsPerSet << " questions.\n";
+        cout << "SET" << setNum << "." << fileType << " generated with " << questionsPerSet << " questions.\n";
     }
 }

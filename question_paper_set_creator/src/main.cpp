@@ -18,10 +18,11 @@
 #include <algorithm>   // for std::shuffle
 #include <ctime>
 #include <sstream>
+#include <filesystem>
 #include "fileHandler.hpp"
 
 using namespace std;
-
+namespace fs = std::filesystem;
 
 
 // Function to take questions as direct input from the user
@@ -64,7 +65,13 @@ int main()
     else if (choice == 2) 
     {
         // Read questions from a file
-        string filePath = "C:\\Users\\Robin\\OneDrive\\Desktop\\Professional\\Question_Paper_Set_Creator\\QuestionpaperInputOutput\\ques.txt";
+#ifdef _WIN32
+        string filePath = "C:/Users/ASUS/Desktop/Question_Paper_Set_Creator/input_ques/questions.txt";
+#else
+        string filePath = "/home/username/Question_Paper_Set_Creator/input_ques/questions.txt";
+#endif
+
+
         /*cout << "Enter the file path: ";
         cin >> filePath;*/
         questionBank = handler.readQuestionsFromFile(filePath);
@@ -86,6 +93,8 @@ int main()
 
     cout << "Enter the number of questions per set: ";
     cin >> questionsPerSet;
+
+
 
     if (questionsPerSet > totalQuestions) 
     {
