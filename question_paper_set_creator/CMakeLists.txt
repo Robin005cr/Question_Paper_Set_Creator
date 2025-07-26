@@ -12,13 +12,16 @@ endif()
 project(question_paper_set_creator)
 
 set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_PREFIX_PATH "/path/to/Qt/6.x.x/gcc_64/lib/cmake")
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 
 # Source files
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/user_interface/*.cpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/inc/*.hpp)
+
 
 # Add executable
 add_executable(question_paper_set_creator ${SOURCES} ${HEADERS})
